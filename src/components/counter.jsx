@@ -1,34 +1,45 @@
-import React, {useState} from 'react'
+import React from 'react';
 
-const Counter = () => {
-    const [count, setCount] = useState(0)
-    const tags = ['tag1', 'tag2', 'tag3']
+const Counter = ({id, value, name, onIncrement, onDecrement, onDelete}) => {
+  const classesBtn = 'btn btn-secondary btn-sm';
 
-    const formCount = () => {
-        return count === 0 ? "Ноль" : count
-    }
+  const formValue = () => {
+    return value === 0 ? 'Ноль' : value;
+  };
 
-    const getBadgeClasses = () => {
-        let classes = "badge m-2 bg-"
-        classes += count === 0 ? 'danger' : 'primary'
-        return classes
-    }
+  const getBadgeClasses = () => {
+    let classes = 'badge m-2 bg-';
+    classes += value === 0 ? 'danger' : 'primary';
 
-    const handleIncrement = productId => {
-        setCount(count + 1)
-    }
-    const handleDecrement = productId => {
-        if (count === 0 ) return
-        setCount(count - 1)
-    }
+    return classes;
+  };
 
-    return (
-        <>
-            <span className={getBadgeClasses()}>{formCount()}</span>
-            <button onClick={() => handleIncrement({id:1})} className='btn btn-secondary btn-sm'>Increment</button>
-            <button onClick={() => handleDecrement({id:2})} className='btn btn-secondary btn-sm'>Decrement</button>
-        </>
-    )
-}
+  return (
+    <React.Fragment>
+      <h4>{name}</h4>
+      <span className={getBadgeClasses()}>{formValue()}</span>
+      <button
+        style={{ marginRight: '5px' }}
+        onClick={() => onIncrement(id)}
+        className={classesBtn}
+      >
+        Increment
+      </button>
+      <button
+        onClick={() => onDecrement(id)}
+        className={classesBtn}
+        disabled={value === 0}
+      >
+        Decrement
+      </button>
+      <button
+        className='btn btn-danger btn-sm m-2'
+        onClick={() => onDelete(id)}
+      >
+        Delete
+      </button>
+    </React.Fragment>
+  );
+};
 
-export default Counter
+export default Counter;
